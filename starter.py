@@ -404,22 +404,37 @@ class MT5NinjaBacktester:
     
     @ErrorHandler.handle
     def verificar_mt5(self, silencioso=False):
-        """Verifica se MT5 está acessível"""
+        """Verifica se MT5 está rodando (por processo, não por título)"""
         if not silencioso:
             print(f"\n{Cores.CIANO}  ● Verificando MetaTrader 5...{Cores.RESET}")
         
         try:
-            import pyautogui
-            janelas = pyautogui.getWindowsWithTitle('MetaTrader 5')
-            if janelas:
+            import psutil
+            
+            # Procurar pelo processo terminal64.exe (MT5)
+            mt5_processos = ['terminal64.exe', 'terminal.exe', 'metatrader64.exe', 'metatrader.exe']
+            mt5_encontrado = False
+            processo_nome = None
+            
+            for proc in psutil.process_iter(['name']):
+                try:
+                    nome = proc.info['name'].lower()
+                    if nome in mt5_processos:
+                        mt5_encontrado = True
+                        processo_nome = proc.info['name']
+                        break
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    pass
+            
+            if mt5_encontrado:
                 self.status['mt5'] = True
                 if not silencioso:
-                    UI.sucesso(f"MT5 encontrado: {janelas[0].title[:40]}...")
+                    UI.sucesso(f"MT5 encontrado: {processo_nome}")
                 return True
             else:
                 self.status['mt5'] = False
                 if not silencioso:
-                    UI.aviso("MT5 não está aberto no momento")
+                    UI.aviso("MT5 não está aberto (processo terminal64.exe não encontrado)")
                 return False
         except Exception as e:
             self.status['mt5'] = False

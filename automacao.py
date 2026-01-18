@@ -117,6 +117,31 @@ class MT5Automacao:
             else:
                 print("ℹ️ Nenhum processo MT5 ativo para encerrar")
     
+    def _encontrar_janela_mt5(self):
+        """Encontra a janela do MT5 independente do título da corretora"""
+        # Padrões específicos do MT5 (título contém corretora + netting/hedging ou XPMT5)
+        # Exemplos: "12656329 - XPMT5-PRD - Netting - XP Investimentos"
+        #           "123456 - MetaTrader 5 - Hedging - Clear"
+        
+        todas_janelas = pyautogui.getAllWindows()
+        for janela in todas_janelas:
+            titulo = janela.title
+            titulo_lower = titulo.lower()
+            
+            # Padrão 1: Contém "Netting" ou "Hedging" (modo de conta MT5)
+            if 'netting' in titulo_lower or 'hedging' in titulo_lower:
+                return janela
+            
+            # Padrão 2: Contém "XPMT5" ou similar
+            if 'xpmt5' in titulo_lower or 'mt5-' in titulo_lower:
+                return janela
+            
+            # Padrão 3: Título começa com número (conta) e tem MetaTrader
+            if titulo and titulo[0].isdigit() and 'metatrader' in titulo_lower:
+                return janela
+        
+        return None
+    
     def focar_mt5(self, forcar=True):
         """Foca janela MT5 com verificação robusta
         
@@ -126,14 +151,12 @@ class MT5Automacao:
         Returns:
             bool: True se conseguiu focar, False caso contrário
         """
-        janelas_mt5 = pyautogui.getWindowsWithTitle('MetaTrader 5')
+        janela = self._encontrar_janela_mt5()
         
-        if not janelas_mt5:
+        if not janela:
             if forcar:
                 raise Exception("❌ MetaTrader 5 não está aberto! Abra o MT5 primeiro.")
             return False
-        
-        janela = janelas_mt5[0]
         
         # Verificar se está minimizada
         if janela.isMinimized:
@@ -173,8 +196,8 @@ class MT5Automacao:
     def verificar_mt5_em_foco(self):
         """Verifica se o MT5 está em primeiro plano"""
         try:
-            janelas_mt5 = pyautogui.getWindowsWithTitle('MetaTrader 5')
-            if janelas_mt5 and janelas_mt5[0].isActive:
+            janela = self._encontrar_janela_mt5()
+            if janela and janela.isActive:
                 return True
         except:
             pass
