@@ -3,12 +3,16 @@
 """
 🚀 STARTER - Sistema de Automação MT5
 Ponto de entrada simplificado para o sistema
-Versão: 2.0 - Arquitetura Orientada a Objetos
+Versão: 3.0 - Com proteção de foco e UI melhorada
 """
 
 import os
 import sys
 from pathlib import Path
+
+def limpar_tela():
+    """Limpa a tela do terminal"""
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 # Base do projeto (pasta deste arquivo)
 BASE_DIR = Path(__file__).resolve().parent
@@ -121,8 +125,9 @@ class StarterSistemaMT5:
     def menu_principal(self):
         """Menu principal unificado e conciso"""
         while True:
-            print("\n" + "="*60)
-            print("🤖 SISTEMA DE AUTOMAÇÃO MT5 v2.0")
+            limpar_tela()
+            print("="*60)
+            print("🥷 MT5 NINJA BACKTESTER v3.0")
             print("="*60)
             print("┌─ OPERACIONAL ───────────────────────────────────┐")
             print("│ 1. 🚀 Executar Automação Completa               │")

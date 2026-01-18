@@ -117,21 +117,83 @@ class MT5Automacao:
             else:
                 print("ℹ️ Nenhum processo MT5 ativo para encerrar")
     
-    def focar_mt5(self):
-        """Foca janela MT5"""
-        try:
-            pyautogui.getWindowsWithTitle('MetaTrader 5')[0].activate()
+    def focar_mt5(self, forcar=True):
+        """Foca janela MT5 com verificação robusta
+        
+        Args:
+            forcar: Se True, tenta múltiplas vezes e levanta exceção se falhar
+        
+        Returns:
+            bool: True se conseguiu focar, False caso contrário
+        """
+        janelas_mt5 = pyautogui.getWindowsWithTitle('MetaTrader 5')
+        
+        if not janelas_mt5:
+            if forcar:
+                raise Exception("❌ MetaTrader 5 não está aberto! Abra o MT5 primeiro.")
+            return False
+        
+        janela = janelas_mt5[0]
+        
+        # Verificar se está minimizada
+        if janela.isMinimized:
+            print("📌 MT5 estava minimizado, restaurando...")
+            janela.restore()
             time.sleep(0.5)
+        
+        # Tentar ativar múltiplas vezes
+        for tentativa in range(3):
+            try:
+                janela.activate()
+                time.sleep(0.3)
+                
+                # Verificar se realmente está em foco
+                if janela.isActive:
+                    return True
+                    
+            except Exception as e:
+                if tentativa == 2:
+                    print(f"⚠️ Aviso ao focar MT5: {e}")
+        
+        # Último recurso: Alt+Tab ou clicar na janela
+        try:
+            # Clicar no centro da janela para garantir foco
+            centro_x = janela.left + janela.width // 2
+            centro_y = janela.top + 50  # Parte superior (barra de título)
+            pyautogui.click(centro_x, centro_y)
+            time.sleep(0.3)
+            return True
         except:
             pass
+        
+        if forcar:
+            raise Exception("❌ Não foi possível focar a janela do MT5!")
+        return False
+    
+    def verificar_mt5_em_foco(self):
+        """Verifica se o MT5 está em primeiro plano"""
+        try:
+            janelas_mt5 = pyautogui.getWindowsWithTitle('MetaTrader 5')
+            if janelas_mt5 and janelas_mt5[0].isActive:
+                return True
+        except:
+            pass
+        return False
     
     def carregar_set_file(self, set_path):
         """Carrega arquivo .set"""
+        # Garantir foco no MT5 antes de interagir
+        self.focar_mt5(forcar=True)
+        
         print(f"📂 Carregando {Path(set_path).stem}...")
         
         # Ir para aba Parâmetros
         pyautogui.click(self.coords['parameters_tab'])
         time.sleep(1)
+        
+        # Verificar foco novamente
+        if not self.verificar_mt5_em_foco():
+            self.focar_mt5(forcar=True)
         
         # Clique direito na área
         pyautogui.rightClick(self.coords['parameters_area'])
@@ -163,6 +225,9 @@ class MT5Automacao:
     
     def iniciar_backtest(self):
         """Inicia backtest"""
+        # Garantir foco no MT5
+        self.focar_mt5(forcar=True)
+        
         print("⚡ Iniciando backtest...")
         pyautogui.click(self.coords['start_button'])
         time.sleep(2)
@@ -171,6 +236,9 @@ class MT5Automacao:
     
     def exportar_csv(self, set_name):
         """Exporta resultado para CSV"""
+        # Garantir foco no MT5
+        self.focar_mt5(forcar=True)
+        
         print(f"💾 Exportando {set_name}...")
         
         # Ir para aba Gráfico
@@ -290,6 +358,12 @@ class MT5Automacao:
         print(f"\n🎯 [{index}/{total}] {set_name}")
         
         try:
+            # Verificar foco antes de cada set
+            if not self.verificar_mt5_em_foco():
+                print("📌 Refocando MT5...")
+                self.focar_mt5(forcar=True)
+                time.sleep(0.5)
+            
             self.carregar_set_file(set_path)
             
             # Iniciar backtest
@@ -314,8 +388,37 @@ class MT5Automacao:
         print("=" * 40)
         
         try:
+            # Verificar se MT5 está rodando e em foco
             self.garantir_mt5_rodando()
-            self.focar_mt5()
+            
+            # Verificar se consegue focar o MT5
+            print("\n🔍 Verificando janela do MT5...")
+            if not self.focar_mt5(forcar=False):
+                print("❌ MT5 não está visível ou acessível!")
+                print("💡 Por favor, abra o MetaTrader 5 e deixe visível.")
+                return
+            
+            print("✅ MT5 está em foco")
+            
+            # Confirmação de segurança
+            print("\n" + "="*50)
+            print("⚠️  ATENÇÃO: A automação vai começar!")
+            print("="*50)
+            print("📌 Certifique-se que:")
+            print("   1. O MT5 está aberto e visível")
+            print("   2. O Strategy Tester está aberto")
+            print("   3. Não mexa no mouse/teclado durante a execução")
+            print("="*50)
+            
+            confirma = input("\n🚀 Iniciar automação? (S/n): ").strip().lower()
+            if confirma == 'n':
+                print("❌ Automação cancelada pelo usuário")
+                return
+            
+            # Focar MT5 novamente após confirmação
+            print("\n🎯 Focando MT5...")
+            self.focar_mt5(forcar=True)
+            time.sleep(1)
             
             arquivos_set = self.obter_arquivos_set()
             total = len(arquivos_set)
