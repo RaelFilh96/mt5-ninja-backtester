@@ -124,8 +124,8 @@ class StarterSistemaMT5:
 
     def menu_principal(self):
         """Menu principal unificado e conciso"""
+        limpar_tela()  # Limpa só na entrada do menu
         while True:
-            limpar_tela()
             print("="*60)
             print("🥷 MT5 NINJA BACKTESTER v3.0")
             print("="*60)
@@ -149,7 +149,9 @@ class StarterSistemaMT5:
                 opcao = input("Escolha uma opção (1-10): ").strip()
 
                 if opcao == "1":
+                    limpar_tela()
                     self.iniciar_sistema_completo()
+                    limpar_tela()  # Limpa após retornar
                 elif opcao == "2":
                     self.verificar_arquivos_set()
                 elif opcao == "3":
@@ -179,7 +181,12 @@ class StarterSistemaMT5:
                 break
             except Exception as e:
                 print(f"❌ Erro: {e}")
+                import traceback
+                traceback.print_exc()
                 input("Pressione ENTER para continuar...")
+            
+            # Limpar tela antes de mostrar menu novamente
+            limpar_tela()
 
     def iniciar_sistema_completo(self):
         """Executa diretamente a automação completa"""

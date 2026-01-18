@@ -396,6 +396,7 @@ class MT5Automacao:
             if not self.focar_mt5(forcar=False):
                 print("❌ MT5 não está visível ou acessível!")
                 print("💡 Por favor, abra o MetaTrader 5 e deixe visível.")
+                input("\nPressione ENTER para voltar ao menu...")
                 return
             
             print("✅ MT5 está em foco")
@@ -446,6 +447,11 @@ class MT5Automacao:
             
         except Exception as e:
             print(f"❌ Erro: {e}")
+            import traceback
+            traceback.print_exc()
+        
+        # Sempre pausar no final para ver resultados
+        input("\nPressione ENTER para voltar ao menu...")
 
 
 if __name__ == "__main__":
