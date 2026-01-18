@@ -1,0 +1,94 @@
+╔═══════════════════════════════════════════════════════════════╗
+║       SISTEMA DE AUTOMAÇÃO MT5 - EXECUTÁVEL PRONTO          ║
+╚═══════════════════════════════════════════════════════════════╝
+
+✅ COMPILAÇÃO CONCLUÍDA COM SUCESSO!
+
+📦 ARQUIVOS EXECUTÁVEIS CRIADOS:
+   
+   📁 dist\AutomacaoMT5.exe  (~31 MB) - Versão compilada
+   📁 AutomacaoMT5_v2.exe    (~31 MB) - Cópia na raiz
+
+═══════════════════════════════════════════════════════════════
+
+🚀 COMO USAR:
+
+   Opção 1: Executar diretamente
+   ------------------------------
+   Clique duas vezes em: AutomacaoMT5_v2.exe
+   
+   Opção 2: Via terminal
+   ------------------------------
+   .\AutomacaoMT5_v2.exe
+
+═══════════════════════════════════════════════════════════════
+
+📋 FUNCIONALIDADES INCLUÍDAS:
+
+   ✅ Automação completa de backtests MT5
+   ✅ Detecção inteligente via porta 3000
+   ✅ Extração OOS (Out-of-Sample)
+   ✅ Calibração de coordenadas
+   ✅ Verificação de configuração
+   ✅ Monitor MT5 robusto
+   ✅ Sistema de fallback seguro
+
+═══════════════════════════════════════════════════════════════
+
+⚙️ ARQUIVOS NECESSÁRIOS (mesma pasta):
+
+   ✅ config.ini - Configurações do sistema
+   ✅ coordenadas.json - Coordenadas calibradas (opcional)
+   ✅ sets/ - Pasta com arquivos .set
+
+═══════════════════════════════════════════════════════════════
+
+📦 PARA DISTRIBUIR:
+
+   Crie uma pasta contendo:
+   
+   📁 AutomacaoMT5/
+      ├── AutomacaoMT5_v2.exe
+      ├── config.ini
+      ├── coordenadas.json (opcional)
+      ├── README.md
+      └── sets/ (pasta vazia ou com .set)
+
+   Compacte em ZIP e distribua!
+
+═══════════════════════════════════════════════════════════════
+
+🔄 PARA RECOMPILAR:
+
+   Execute: compilar.bat
+   
+   Ou manualmente:
+   pyinstaller --clean --noconfirm build_exe.spec
+
+═══════════════════════════════════════════════════════════════
+
+✨ RECURSOS:
+
+   - Tamanho: ~31 MB (todas dependências incluídas)
+   - Tipo: Executável único (onefile)
+   - Console: Sim (interface de terminal)
+   - Python: Não necessário para usuário final
+   - Dependências: Todas incluídas (PyAutoGUI, psutil, etc.)
+
+═══════════════════════════════════════════════════════════════
+
+🎯 TESTADO E FUNCIONANDO:
+
+   ✅ Menu principal carrega corretamente
+   ✅ Módulos Python incluídos
+   ✅ Config.ini encontrado
+   ✅ Sistema pronto para uso
+
+═══════════════════════════════════════════════════════════════
+
+📞 SUPORTE:
+
+   Consulte: COMPILACAO.md para detalhes técnicos
+   Consulte: README.md para manual completo
+
+╚═══════════════════════════════════════════════════════════════╝

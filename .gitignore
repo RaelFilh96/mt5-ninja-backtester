@@ -1,0 +1,53 @@
+# Build artifacts
+build/
+dist/
+*.spec.bak
+__pycache__/
+*.pyc
+*.pyo
+
+# Executáveis (manter apenas o principal)
+# MT5_Ninja_Backtester.exe - MANTER NO REPO
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Sets de usuário (privados)
+# sets/*.set - Comentado para permitir exemplos
+
+# Coordenadas específicas do usuário (geradas pela calibração)
+# coordenadas.json - Comentado para permitir exemplo
+
+# Configuração com dados sensíveis
+# config.ini - Comentado para manter exemplo no repo
+
+# Pasta de curvas/CSVs (dados pessoais)
+sets/curvas/*.csv
+
+# Arquivos de teste
+teste_*.py
+debug_*.py
+
+# Arquivos antigos/backup
+*.old
+*.bak
+*_backup*

@@ -1,0 +1,13 @@
+; Arquivo de exemplo - substitua pelos seus arquivos .set reais
+MAGIC_NUMBER=31
+TIMEFRAME=6
+SYMBOL_CODE=WIN$N
+ALLOWED=0
+ORDER_DISTANCE=0.0
+LOT_TYPE=0
+REF_LOT=1.0
+FINANCIAL_LOT=1000.0
+MARGIN_LOT=90.0
+CustomPerfCriterium=1
+MinTrades=1
+MaxTrades=0
