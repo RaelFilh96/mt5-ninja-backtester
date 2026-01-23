@@ -36,7 +36,8 @@ class CalibradorMT5:
             ('start_button', 'Botão Start para iniciar backtest'),
             ('graph_tab', 'Aba Gráfico do Strategy Tester'),
             ('graph_area', 'Área do gráfico para clique direito'),
-            ('export_csv', 'Opção Exportar CSV no menu')
+            ('export_csv', 'Opção Exportar CSV no menu'),
+            ('save_button', 'Botão Salvar no diálogo (opcional)')
         ]
         
         for nome, desc in pontos:
