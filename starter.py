@@ -274,7 +274,7 @@ BASE_DIR = Path(__file__).resolve().parent
 class MT5NinjaBacktester:
     """Sistema Principal do MT5 Ninja Backtester"""
     
-    VERSION = "4.1.0"
+    VERSION = "4.2.0"
     
     def __init__(self):
         UI.habilitar_cores_windows()

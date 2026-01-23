@@ -5,8 +5,8 @@
 
 VSVersionInfo(
   ffi=FixedFileInfo(
-    filevers=(4, 1, 0, 0),
-    prodvers=(4, 1, 0, 0),
+    filevers=(4, 2, 0, 0),
+    prodvers=(4, 2, 0, 0),
     mask=0x3f,
     flags=0x0,
     OS=0x40004,
@@ -22,12 +22,12 @@ VSVersionInfo(
           [
             StringStruct(u'CompanyName', u'MT5 Ninja Tools'),
             StringStruct(u'FileDescription', u'Sistema de Automação para Backtests MetaTrader 5'),
-            StringStruct(u'FileVersion', u'4.1.0.0'),
+            StringStruct(u'FileVersion', u'4.2.0.0'),
             StringStruct(u'InternalName', u'MT5_Ninja_Backtester'),
             StringStruct(u'LegalCopyright', u'© 2026 MT5 Ninja Tools. MIT License.'),
             StringStruct(u'OriginalFilename', u'MT5_Ninja_Backtester.exe'),
             StringStruct(u'ProductName', u'MT5 Ninja Backtester'),
-            StringStruct(u'ProductVersion', u'4.1.0.0'),
+            StringStruct(u'ProductVersion', u'4.2.0.0'),
           ]
         )
       ]
